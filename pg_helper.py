@@ -5,7 +5,7 @@ from api_secrets import pg_pw
 from os import listdir 
 from os import path
 from sqlalchemy import create_engine
-from sqlalchemy import __version__ as alchv
+from sqlalchemy import __version__ as _version
 import sqlite3
 
 
@@ -32,7 +32,7 @@ class Bridge:
             print(error)
 
     def alch_con(self):
-        if alchv != '1.4.46':
+        if _version != '1.4.46':
             print('SQLAlchemy version may not be compatible with import tools')
             pass
         else:
@@ -42,10 +42,12 @@ class Bridge:
         
     @classmethod
     def lite_con(cls, db: str | None=PG_DB):
-        cls.db = db
-        con = sqlite3.connect(database=cls.db)
+        con = sqlite3.connect(database=db)
         return con
 
+    def __repr__(self) -> str:
+        return print(f"""{self.__class__.__name__}, database = {self.db}, username = {self.username},
+                     password = {self.password}, port = {self.port}, host = {self.host}""")
 
 class CsvTools: #ImportTools
     LOC = 'dump'
