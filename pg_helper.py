@@ -73,7 +73,9 @@ class CsvTools: #ImportTools
                 df = pd.read_csv(path.join(path.abspath(self.location), listdir(path.abspath(self.location))[idx]))
                 col_check = CsvTools.column_clean(df)
                 df = df.rename(columns=col_check)
-                df.to_sql(path.splitext(file)[0], con=alchemy_engine, index=False, if_exists='replace')   
+                print(df.head(2)) 
+                df.to_sql(path.splitext(file)[0], con=alchemy_engine, if_exists='replace')
+                  
 
     def custom_dump(self, db=None): 
         if db is None:
@@ -86,7 +88,7 @@ class CsvTools: #ImportTools
             df = pd.read_csv(self.location + "/" + selection)
             col_check = CsvTools.column_clean(df)
             df.rename(columns=col_check, inplace=True)
-            df.to_sql(selection.split('.')[0], sql_alch, index=False, if_exists='replace') 
+            df.to_sql(selection.split('.')[0], sql_alch, if_exists='replace') 
 
     def from_link(self):
         pass
